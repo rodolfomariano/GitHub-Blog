@@ -17,6 +17,11 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  :focus {
+    outline: 0;
+    box-shadow: 0 0 0 1px ${({ theme }) => theme['brand-blue']};
+  }
+
   body {
     background-color: ${({ theme }) => theme.background};
     font-family: 'Nunito', sans-serif;
@@ -37,5 +42,9 @@ export const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
     border: none;
+  }
+
+  a {
+    text-decoration: none;
   }
 `
