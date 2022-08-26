@@ -130,6 +130,14 @@ export const SearchForm = styled.form`
     }
   }
 `
+export const LoadingContainer = styled.div`
+  margin-top: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export const PostsContainer = styled.section`
   margin-top: 3rem;
 

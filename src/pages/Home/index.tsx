@@ -1,23 +1,64 @@
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import ReactLoading from 'react-loading'
+
 import {
   FaExternalLinkAlt,
   FaGithub,
   FaBuilding,
   FaUserFriends,
 } from 'react-icons/fa'
+
 import { PostCard } from '../../components/PostCard'
 import { useIssue } from '../../hooks/useIssue'
 
 import {
   HomeContainer,
   ImageContainer,
+  LoadingContainer,
   PersonalCard,
   PostsContainer,
   SearchForm,
   UserData,
 } from './styles'
+import { useEffect, useState } from 'react'
+import { RepoIssue } from '../../contexts/issueContext'
+
+const searchFormSchema = z.object({
+  query: z.string(),
+})
+
+type SearchFormInput = z.infer<typeof searchFormSchema>
 
 export function Home() {
   const { personalData, repoIssuesData } = useIssue()
+
+  const [postsFiltered, setPostsFiltered] =
+    useState<RepoIssue[]>(repoIssuesData)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<SearchFormInput>({
+    resolver: zodResolver(searchFormSchema),
+  })
+
+  async function handleSearchIssue(data: SearchFormInput) {
+    await new Promise((resolve) => setTimeout(resolve, 800))
+
+    const response = repoIssuesData.filter((issue) =>
+      issue.title.toLowerCase().includes(data.query),
+    )
+    setPostsFiltered(response)
+    reset()
+  }
+
+  useEffect(() => {
+    setPostsFiltered(repoIssuesData)
+  }, [repoIssuesData])
 
   return (
     <HomeContainer>
@@ -64,21 +105,31 @@ export function Home() {
         </UserData>
       </PersonalCard>
 
-      <SearchForm>
+      <SearchForm onSubmit={handleSubmit(handleSearchIssue)}>
         <header>
           <h2>Publicações</h2>
 
           <span>{repoIssuesData.length} publicações</span>
         </header>
 
-        <input type="text" placeholder="Buscar conteúdo" />
+        <input
+          type="text"
+          placeholder="Buscar conteúdo"
+          {...register('query')}
+        />
       </SearchForm>
 
-      <PostsContainer>
-        {repoIssuesData.map((issue) => {
-          return <PostCard key={issue.id} data={issue} />
-        })}
-      </PostsContainer>
+      {isSubmitting ? (
+        <LoadingContainer>
+          <ReactLoading type="bubbles" height={32} color="#3294F8" />
+        </LoadingContainer>
+      ) : (
+        <PostsContainer>
+          {postsFiltered.map((issue) => {
+            return <PostCard key={issue.id} data={issue} />
+          })}
+        </PostsContainer>
+      )}
     </HomeContainer>
   )
 }
