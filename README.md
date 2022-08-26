@@ -23,7 +23,7 @@ npm install
 yarn
 ```
 
-Secund, run using expo
+Secund, run
 
 ```bash
 yarn dev
