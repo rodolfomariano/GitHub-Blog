@@ -5,6 +5,7 @@ import {
   FaUserFriends,
 } from 'react-icons/fa'
 import { PostCard } from '../../components/PostCard'
+import { useIssue } from '../../hooks/useIssue'
 
 import {
   HomeContainer,
@@ -16,22 +17,21 @@ import {
 } from './styles'
 
 export function Home() {
+  const { personalData, repoIssuesData } = useIssue()
+
   return (
     <HomeContainer>
       <PersonalCard>
         <ImageContainer>
-          <img
-            src="https://avatars.githubusercontent.com/u/62636838?v=4"
-            alt=""
-          />
+          <img src={personalData.avatarURL} alt="" />
         </ImageContainer>
 
         <UserData>
           <header>
-            <h1>Rodolfo Mariano de Souza</h1>
+            <h1>{personalData.name}</h1>
 
             <a
-              href="https://github.com/rodolfomariano"
+              href={`https://github.com/${personalData.login}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -41,26 +41,24 @@ export function Home() {
             </a>
           </header>
 
-          <p>
-            Hi, i am graduated in computer science, I have strong interest in
-            frontend. At the moment i am studying Next Js, scss and libraries of
-            styles how Chakra UI.
-          </p>
+          <p>{personalData.bio}</p>
 
           <div>
             <span>
               <FaGithub size={18} />
-              rodolfomariano
+              {personalData.login}
             </span>
 
-            <span>
-              <FaBuilding size={18} />
-              compani
-            </span>
+            {personalData.company && (
+              <span>
+                <FaBuilding size={18} />
+                {personalData.company}
+              </span>
+            )}
 
             <span>
               <FaUserFriends size={18} />
-              32 seguidores
+              {personalData.followers} seguidores
             </span>
           </div>
         </UserData>
@@ -77,9 +75,9 @@ export function Home() {
       </SearchForm>
 
       <PostsContainer>
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {repoIssuesData.map((issue) => {
+          return <PostCard key={issue.id} data={issue} />
+        })}
       </PostsContainer>
     </HomeContainer>
   )
