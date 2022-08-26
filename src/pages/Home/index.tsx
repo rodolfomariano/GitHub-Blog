@@ -50,7 +50,7 @@ export function Home() {
     await new Promise((resolve) => setTimeout(resolve, 800))
 
     const response = repoIssuesData.filter((issue) =>
-      issue.title.toLowerCase().includes(data.query),
+      issue.title.toLowerCase().includes(data.query.toLowerCase()),
     )
     setPostsFiltered(response)
     reset()
@@ -109,7 +109,10 @@ export function Home() {
         <header>
           <h2>Publicações</h2>
 
-          <span>{repoIssuesData.length} publicações</span>
+          <span>
+            {postsFiltered.length}{' '}
+            {postsFiltered.length > 1 ? 'publicações' : 'publicação'}
+          </span>
         </header>
 
         <input
