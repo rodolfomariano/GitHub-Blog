@@ -1,5 +1,6 @@
 import { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { dateFormatter } from '../../utils/formatter'
 import { PostCardContainer } from './styles'
 
 interface PostCardProps {
@@ -26,7 +27,7 @@ export function PostCard({ data }: PostCardProps) {
       <header>
         <h1>{data.title}</h1>
 
-        <span>{data.created_at}</span>
+        <span>{dateFormatter(new Date(data.created_at))}</span>
       </header>
 
       <div>

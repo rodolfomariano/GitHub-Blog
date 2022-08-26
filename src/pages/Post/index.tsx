@@ -11,6 +11,7 @@ import { PostContainer, PostContent, PostDataCard } from './styles'
 import { useIssue } from '../../hooks/useIssue'
 
 import { useEffect } from 'react'
+import { dateFormatter } from '../../utils/formatter'
 
 export function Post() {
   const { id } = useParams<string>()
@@ -55,7 +56,7 @@ export function Post() {
 
           <span>
             <FaCalendarDay size={18} />
-            {post.created_at}
+            {post.created_at && dateFormatter(new Date(post.created_at))}
           </span>
 
           <span>

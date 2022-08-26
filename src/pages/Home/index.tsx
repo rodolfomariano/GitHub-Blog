@@ -68,7 +68,7 @@ export function Home() {
         <header>
           <h2>Publicações</h2>
 
-          <span>6 publicações</span>
+          <span>{repoIssuesData.length} publicações</span>
         </header>
 
         <input type="text" placeholder="Buscar conteúdo" />
