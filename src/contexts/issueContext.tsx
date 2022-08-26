@@ -23,6 +23,7 @@ export interface RepoIssue {
   body: string
   comments: number
   number: number
+  html_url: string
   user: {
     login: string
   }
@@ -96,6 +97,7 @@ export function IssueContextProvider({ children }: IssueContextProviderProps) {
             body: issue.body,
             comments: issue.comments,
             number: issue.number,
+            html_url: issue.html_url,
             user: {
               login: issue.user.login,
             },

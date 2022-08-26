@@ -36,11 +36,7 @@ export function Post() {
             </span>
           </Link>
 
-          <a
-            href="https://github.com/rodolfomariano"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={post.html_url} target="_blank" rel="noreferrer">
             <span>
               VER NO GITHUB <FaExternalLinkAlt size={12} />
             </span>
