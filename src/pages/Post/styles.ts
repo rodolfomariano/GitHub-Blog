@@ -72,7 +72,25 @@ export const PostContent = styled.div`
     line-height: 160%;
   }
 
+  a {
+    color: ${({ theme }) => theme['brand-blue']};
+    transition: 300ms;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
   p + p {
     margin-top: 2rem;
+  }
+
+  code {
+    display: block;
+
+    width: 100%;
+    background-color: ${({ theme }) => theme['base-code-post']};
+    padding: 16px;
+    margin: 1.5rem 0;
   }
 `

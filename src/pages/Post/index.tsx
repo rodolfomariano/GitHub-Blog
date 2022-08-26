@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 import {
   FaCalendarDay,
   FaGithub,
@@ -10,7 +12,6 @@ import {
 import { PostContainer, PostContent, PostDataCard } from './styles'
 import { useIssue } from '../../hooks/useIssue'
 
-import { useEffect } from 'react'
 import { dateFormatter } from '../../utils/formatter'
 
 export function Post() {
@@ -67,7 +68,7 @@ export function Post() {
       </PostDataCard>
 
       <PostContent>
-        <p>{post.body}</p>
+        <ReactMarkdown>{post.body}</ReactMarkdown>
       </PostContent>
     </PostContainer>
   )
