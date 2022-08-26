@@ -8,6 +8,7 @@ export const PostCardContainer = styled.button`
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme['base-code-post']};
   transition: 300ms;
+  overflow: hidden;
 
   header {
     margin-bottom: 1.25rem;
@@ -28,10 +29,17 @@ export const PostCardContainer = styled.button`
     }
   }
 
-  p {
-    text-align: start;
-    line-height: 160%;
-    color: ${({ theme }) => theme['base-text']};
+  div {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    p {
+      text-align: start;
+      line-height: 160%;
+      color: ${({ theme }) => theme['base-text']};
+    }
   }
 
   &:hover {

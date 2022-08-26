@@ -29,7 +29,9 @@ export function PostCard({ data }: PostCardProps) {
         <span>{data.created_at}</span>
       </header>
 
-      <p>{`${data.body.substr(0, 310)}... `}</p>
+      <div>
+        <p>{`${data.body.substr(0, 310)}... `}</p>
+      </div>
     </PostCardContainer>
   )
 }
