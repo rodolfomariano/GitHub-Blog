@@ -15,15 +15,15 @@ import { useIssue } from '../../hooks/useIssue'
 import { dateFormatter } from '../../utils/formatter'
 
 export function Post() {
-  const { id } = useParams<string>()
+  const { issueNumber } = useParams<string>()
 
-  const convertIdToNumber = Number(id)
-
-  const { post, findIssueById } = useIssue()
+  const { post, findIssueByNumber } = useIssue()
 
   useEffect(() => {
-    findIssueById(convertIdToNumber)
-  }, [findIssueById, convertIdToNumber])
+    if (issueNumber) {
+      findIssueByNumber(issueNumber)
+    }
+  }, [findIssueByNumber, issueNumber])
 
   return (
     <PostContainer>

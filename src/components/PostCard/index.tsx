@@ -10,7 +10,7 @@ interface PostCardProps {
     created_at: string
     body: string
     comments: number
-    number: number
+    issueNumber: string
   }
 }
 
@@ -20,7 +20,7 @@ export function PostCard({ data }: PostCardProps) {
   function handleSeePostDetails(e: FormEvent) {
     e.preventDefault()
 
-    navigation(`/post/${JSON.stringify(data.id)}`)
+    navigation(`/post/${data.issueNumber}`)
   }
   return (
     <PostCardContainer onClick={handleSeePostDetails}>

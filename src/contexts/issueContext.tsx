@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { getIssues, getUserData } from '../lib/axios'
+import { getIssueByNumber, getIssues, getUserData } from '../lib/axios'
 
 interface PersonalData {
   name: string
@@ -17,6 +17,19 @@ interface PersonalData {
 }
 
 export interface RepoIssue {
+  id: number
+  title: string
+  created_at: string
+  body: string
+  comments: number
+  issueNumber: string
+  html_url: string
+  user: {
+    login: string
+  }
+}
+
+export interface Response {
   id: number
   title: string
   created_at: string
@@ -35,7 +48,7 @@ interface IssueContextProps {
   post: RepoIssue
   findPersonalData: () => void
   findIssuesData: () => void
-  findIssueById: (id: number) => void
+  findIssueByNumber: (issueNumber: string) => void
 }
 
 interface IssueContextProviderProps {
@@ -87,7 +100,7 @@ export function IssueContextProvider({ children }: IssueContextProviderProps) {
 
     try {
       if (response) {
-        const issues: RepoIssue[] = response.data.items
+        const issues: Response[] = response.data.items
 
         const responseEdit = issues.map((issue) => {
           return {
@@ -96,7 +109,7 @@ export function IssueContextProvider({ children }: IssueContextProviderProps) {
             created_at: issue.created_at,
             body: issue.body,
             comments: issue.comments,
-            number: issue.number,
+            issueNumber: issue.number.toString(),
             html_url: issue.html_url,
             user: {
               login: issue.user.login,
@@ -111,17 +124,13 @@ export function IssueContextProvider({ children }: IssueContextProviderProps) {
     }
   }, [])
 
-  const findIssueById = useCallback(async (id: number) => {
-    const response = await getIssues.get(
-      'issues?q=%20repo:rodolfomariano/GitHub-Blog',
-    )
+  const findIssueByNumber = useCallback(async (issueNumber: string) => {
+    const response = await getIssueByNumber.get(`${issueNumber}`)
 
-    const post = response.data.items.find(
-      (issue: RepoIssue) => issue.id === id,
-    ) as RepoIssue
+    const postResponse = response.data as RepoIssue
 
-    setPost(post)
-    return post
+    setPost(postResponse)
+    return postResponse
   }, [])
 
   useEffect(() => {
@@ -137,7 +146,7 @@ export function IssueContextProvider({ children }: IssueContextProviderProps) {
         post,
         findPersonalData,
         findIssuesData,
-        findIssueById,
+        findIssueByNumber,
       }}
     >
       {children}
